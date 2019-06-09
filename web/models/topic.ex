@@ -4,6 +4,7 @@ defmodule Discuss.Topic do
 
     schema "topics" do
         field :title, :string
+        field :image_url, :string
         belongs_to :user, Discuss.Topic
     end
 
