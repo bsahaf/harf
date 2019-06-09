@@ -1,6 +1,7 @@
 defmodule Discuss.TopicController do
     use Discuss.Web, :controller
     alias Discuss.Topic
+    alias Discuss.Router.Helpers
 
     plug Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
     plug :check_topic_owner when action in [:update, :edit, :delete]
@@ -21,11 +22,34 @@ defmodule Discuss.TopicController do
     end
 
 
-    def create(conn, %{"topic" => topic}) do
+    def create(conn, %{"topic" => %{"description" => description, "image" => image_params, "title" => title}} = topic) do
+
+        IO.inspect topic
+        IO.inspect description
+        IO.inspect image_params
+        IO.inspect title
+
+
+        file_uuid = UUID.uuid4(:hex)        
+        image_filename = image_params.filename
+        unique_filename = "#{file_uuid}-#{image_filename}"
+        {:ok, image_binary} = File.read(image_params.path)           
+        
+        bucket_name = "basim-image-storage-bucket"
+
+        bucket_name 
+        |> ExAws.S3.put_object(unique_filename, image_binary)
+        |> ExAws.request!
+
+        topic_params = %{
+            title: title,
+            description: description,
+            image_url: "https://#{bucket_name}.s3.amazonaws.com/#{bucket_name}/#{unique_filename}"
+        }
 
         changeset = conn.assigns.user
         |> build_assoc(:topics)
-        |> Topic.changeset(topic)
+        |> Topic.changeset(topic_params)
 
         #inserts the new topic into the database
         case Repo.insert(changeset) do

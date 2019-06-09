@@ -1,8 +1,18 @@
-<%= form_for @changeset, topic_path(@conn, :create), fn f -> %>
-    <div class="form-group">
-        <%= text_input f, :title, placeholder: "Title", class: "form-control" %>
-        <%= error_tag f, :title %>
+<%= form_for @changeset, topic_path(@conn, :create), [multipart: true], fn f -> %>
+    <h2 class="ui center aligned icon header">
+        <i class="edit icon"></i>
+        Create a new post
+    </h2>
+
+    <div class="ui form">
+        <%= text_input f, :title, placeholder: "Title"%>
+        <div class="field">
+            <%= textarea f, :description, placeholder: "Description"%>
+        </div>
     </div>
-    
-    <%= submit "Save Topic", class: "btn btn-primary" %>
+    <br>
+    <%= file_input f, :image%>    
+    <%= error_tag f, :image %>  
+     <br>
+    <%= submit "Save Topic", class: "fluid huge ui primary button" %>
 <% end %>

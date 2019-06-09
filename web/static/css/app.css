@@ -1,11 +1,30 @@
+html {
+    overflow: hidden;
+}
+
+.container {
+    margin: 5% 25%;
+    overflow: hidden;
+}
+
 .help-block {
     color: red;
     text-transform: capitalize;
     position: absolute;
-    top: 40px;
+    top: 30px;
+    font-size: 10px;
 }
 
-.form-group {
+.ui.form {
+    margin-top: 8%;
     position: relative;
-    margin-bottom: 35px;
+}
+
+.ui.form .field {
+    clear: both;
+    margin-top: 2%  !important;
+}
+
+.launch.button {
+    display: block;
 }

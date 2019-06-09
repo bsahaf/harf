@@ -1,19 +1,35 @@
 <h2>Topics</h2>
 
-<ul class = "collection">
-    <%= for topic <- @topics do %>
-        <li class = "collection-item">
-            <%= topic.title %>
-
-            <%= if @conn.assigns.user != nil && @conn.assigns.user.id == topic.user_id  do %>
-            <div class="right">
-                <%= link "Edit" , to: topic_path(@conn, :edit, topic) %>
-                <%= link "Delete" , to: topic_path(@conn, :delete, topic), method: :delete %>
+<div class="ui divided items">
+     <%= for topic <- @topics do %>
+        <div class="item">
+            <div class="ui small image">
+                <img src = @topics.image_url>
             </div>
-            <% end %>
-        </li>
+            <div class="content">
+                <div class="header">
+                    <%= topic.title %>
+                </div>
+                 <div class="meta">
+                    <span class="price">$1200</span>
+                    <span class="stay">1 Month</span>
+                 </div>
+                 <%= if @conn.assigns.user != nil && @conn.assigns.user.id == topic.user_id  do %>
+                 <div class="extra">
+                     <div class="ui right floated button">
+                        <%= link "Edit" , to: topic_path(@conn, :edit, topic) %>
+                    </div>
+                    <div class="ui right floated button">
+                        <%= link "Delete" , to: topic_path(@conn, :delete, topic), method: :delete %>
+                    </div>
+                 </div>
+                 <% end %>
+             </div>
+        </div>
     <% end %>
-</ul>
+</div>
+
+
 
 <div class = "fixed-action-btn">
     <%= link to: topic_path(@conn, :new), class: "btn-floating btn-large waves-effect waves-light red" do %>
@@ -21,3 +37,8 @@
     <% end %>
     </a>
 </div>
+
+
+
+
+  
