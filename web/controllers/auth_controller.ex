@@ -8,7 +8,9 @@ defmodule Discuss.AuthController do
         user_params = %{
             token: auth.credentials.token,
             email: auth.info.email,
-            provider: "github"
+            provider: "github",
+            name: auth.info.name,
+            image_url: auth.info.urls.avatar_url
         }
 
         changeset = User.changeset(%User{}, user_params)

@@ -4,38 +4,41 @@
      <%= for topic <- @topics do %>
         <div class="item">
             <div class="ui small image">
-                <img src = @topics.image_url>
+               <%= img_tag(topic.image_url) %>
             </div>
             <div class="content">
                 <div class="header">
-                    <%= topic.title %>
+                    <%= link topic.title, to: topic_path(@conn, :show, topic) %>
                 </div>
                  <div class="meta">
                     <span class="price">$1200</span>
                     <span class="stay">1 Month</span>
                  </div>
+                 <div class="description">
+                    <p> <%= truncate(topic.description, length: 255) %> </p>
+                </div>
+                <div class="extra">
+                    <div class="ui right floated labeled button">
+                        <div class="mini ui red button">
+                            <i class="heart icon"></i>
+                        </div>
+                        <a class="ui basic red left pointing label">
+                                1,048
+                        </a>
+                    </div>
                  <%= if @conn.assigns.user != nil && @conn.assigns.user.id == topic.user_id  do %>
-                 <div class="extra">
-                     <div class="ui right floated button">
+                     <div class="mini ui left floated button">
                         <%= link "Edit" , to: topic_path(@conn, :edit, topic) %>
                     </div>
-                    <div class="ui right floated button">
+                    <div class="mini ui left floated button">
                         <%= link "Delete" , to: topic_path(@conn, :delete, topic), method: :delete %>
                     </div>
-                 </div>
                  <% end %>
+                 
+                 </div>
              </div>
         </div>
     <% end %>
-</div>
-
-
-
-<div class = "fixed-action-btn">
-    <%= link to: topic_path(@conn, :new), class: "btn-floating btn-large waves-effect waves-light red" do %>
-        <i class = "material-icons">add</i>
-    <% end %>
-    </a>
 </div>
 
 

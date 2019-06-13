@@ -14,6 +14,12 @@ defmodule Discuss.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/user", Discuss do
+    pipe_through :browser
+
+    get "/profile/", ProfileController, :index
+  end
+
   scope "/", Discuss do
     pipe_through :browser # Use the default browser stack
 
@@ -28,16 +34,9 @@ defmodule Discuss.Router do
 
   scope "/upload", Discuss do 
     pipe_through :browser 
-    # resources "/new", 
     get "/new/file", UploadController, :new
     post "/new", UploadController, :create
   end
-
-  # scope "/upload", Discuss do
-  #   pipe_through :browser
-
-  #   get "/new", UploadController, :new
-  # end
 
   scope "/auth", Discuss do
     pipe_through :browser
@@ -45,8 +44,8 @@ defmodule Discuss.Router do
     get "/logout", AuthController, :signout
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
-  
   end
+
 
 
   # Other scopes may use custom stacks.

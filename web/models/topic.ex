@@ -6,7 +6,8 @@ defmodule Discuss.Topic do
         field :title, :string
         field :description, :string
         field :image_url, :string
-        belongs_to :user, Discuss.Topic
+        belongs_to :user, Discuss.User
+        has_many :comments, Discuss.Comment
     end
 
 

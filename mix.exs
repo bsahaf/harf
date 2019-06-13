@@ -19,7 +19,8 @@ defmodule Discuss.Mixfile do
   def application do
     [mod: {Discuss, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ueberauth, :ueberauth_github, :ueberauth_facebook, :ex_aws, :ex_aws_s3]]
+                    :phoenix_ecto, :postgrex, :ueberauth, :ueberauth_github, :ueberauth_facebook, :ex_aws, :ex_aws_s3,
+                    :phoenix_html_simplified_helpers]]
   end
 
   # Specifies which paths to compile per environment.
@@ -47,6 +48,7 @@ defmodule Discuss.Mixfile do
      {:hackney, "~> 1.9"},     
      {:uuid, "~> 1.1" },
      {:sweet_xml, "~> 0.6"},
+     {:phoenix_html_simplified_helpers, "~> 2.1"}
     ]
   end
 

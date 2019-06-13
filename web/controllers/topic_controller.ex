@@ -9,10 +9,14 @@ defmodule Discuss.TopicController do
 
 
     def index(conn, _params) do
-        IO.inspect conn.assigns
         topics = Repo.all(Topic)
         render conn, "index.html", topics: topics
+    end
 
+
+    def show(conn, %{ "id" => topic_id}) do
+        topic = Repo.get!(Topic, topic_id)
+        render conn, "show.html", topic: topic
     end
 
 
@@ -24,12 +28,6 @@ defmodule Discuss.TopicController do
 
     def create(conn, %{"topic" => %{"description" => description, "image" => image_params, "title" => title}} = topic) do
 
-        IO.inspect topic
-        IO.inspect description
-        IO.inspect image_params
-        IO.inspect title
-
-
         file_uuid = UUID.uuid4(:hex)        
         image_filename = image_params.filename
         unique_filename = "#{file_uuid}-#{image_filename}"
@@ -38,13 +36,34 @@ defmodule Discuss.TopicController do
         bucket_name = "basim-image-storage-bucket"
 
         bucket_name 
-        |> ExAws.S3.put_object(unique_filename, image_binary)
+        |> ExAws.S3.put_object(unique_filename, image_binary, [acl: :public_read])
         |> ExAws.request!
 
         topic_params = %{
             title: title,
             description: description,
             image_url: "https://#{bucket_name}.s3.amazonaws.com/#{bucket_name}/#{unique_filename}"
+        }
+
+        changeset = conn.assigns.user
+        |> build_assoc(:topics)
+        |> Topic.changeset(topic_params)
+
+        #inserts the new topic into the database
+        case Repo.insert(changeset) do
+            {:ok, _topic} ->
+                conn
+                |> put_flash(:info, "Topic created")
+                |> redirect(to: topic_path(conn, :index))
+            {:error, changeset} ->
+                render conn, "new.html", changeset: changeset
+        end
+    end
+
+    def create(conn, %{"topic" => %{"description" => description, "title" => title}} = topic) do
+        topic_params = %{
+            title: title,
+            description: description,
         }
 
         changeset = conn.assigns.user

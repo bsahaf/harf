@@ -1,0 +1,34 @@
+
+<div class="ui centered huge header postHeader"><%= @topic.title %></div>
+<div class="ui divider"></div>
+<p>
+ <%= if @topic.image_url != "" do %>
+        <%= img_tag(@topic.image_url, [class: "ui medium rounded image"])%>
+        <br>
+        <%= @topic.description %>
+<% end %>
+
+</p>
+<div class = "ui segment">
+    <div class="comments-insert ui centered small comments">
+        <form class="ui reply form">
+            <div class="field">
+                <textarea></textarea>
+            </div>
+            <div class="comment-button ui blue labeled submit icon button">
+                <i class="icon edit"></i>
+                Add Reply
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        window.createSocket(<%= @topic.id %>)
+    })
+    
+</script>
+
+
+

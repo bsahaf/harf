@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content=""> 
 
-    <title>Hello Discuss!</title>
+    <title>Home | Harf</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <%# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> %>
@@ -18,18 +18,19 @@
 
   <body>
 
-    <div class="ui top fixed menu inverted">
+    <div class="ui fixed inverted menu">
       <a href="/" class="item">
-      <i class="keyboard icon"></i>
-           Discussions
+      <i class="lightbulb icon"></i>
+           Harf
         </a>
         <div class = "right menu">
+          <%= link to: topic_path(@conn, :new), class: "vertically fitted borderless item" do %>
+             <i class="large edit icon"></i>
+          <% end %>
           <%= if @conn.assigns[:user] do %>
             <%= link "Sign out", class: "vertically fitted borderless item", to: auth_path(@conn, :signout) %>
           <% else %>
-            <li>
-              <%= link "Sign in", to: auth_path(@conn, :request, "github") %>
-            </li>
+              <%= link "Sign in", class: "vertically fitted borderless item", to: auth_path(@conn, :request, "github") %>
           <% end %>
         </div>
     </div>

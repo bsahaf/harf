@@ -85,9 +85,25 @@ html {
 }
 
 .container {
-    margin: 5% 25%;
+    margin: 10% auto;
     overflow: hidden;
+    max-width: 70%;
+    padding: 10px;
 }
+
+
+
+/*******index.html*************/
+
+/* a.header {
+    font-size: 150%;
+    text-align: center;
+} */
+
+
+
+
+/*****************************/
 
 .help-block {
     color: red;
@@ -110,5 +126,10 @@ html {
 .launch.button {
     display: block;
 }
+
+.ui.huge.header {
+    font-size: 3em !important;
+}
+
 
 /*# sourceMappingURL=app.css.map*/

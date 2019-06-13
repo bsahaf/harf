@@ -1480,6 +1480,8 @@ require.register("web/static/js/app.js", function(exports, require, module) {
 
 require("phoenix_html");
 
+require("./socket");
+
 });
 
 require.register("web/static/js/socket.js", function(exports, require, module) {
@@ -1545,13 +1547,30 @@ var socket = new _phoenix.Socket("/socket", { params: { token: window.userToken 
 socket.connect();
 
 // Now that you are connected, you can join channels with a topic:
-var channel = socket.channel("topic:subtopic", {});
-channel.join().receive("ok", function (resp) {
-  console.log("Joined successfully", resp);
-}).receive("error", function (resp) {
-  console.log("Unable to join", resp);
-});
 
+var createSocket = function createSocket(topicID) {
+  var channel = socket.channel("comments:" + topicID, {});
+  channel.join().receive("ok", function (resp) {
+    renderComments(resp.comments);
+  }).receive("error", function (resp) {
+    console.log("Unable to join", resp);
+  });
+  document.querySelector('.comment-button').addEventListener('click', function () {
+    console.log("here");
+    var content = document.querySelector('textarea').value;
+    channel.push('comment:add', { content: content });
+  });
+};
+
+window.createSocket = createSocket;
+
+function renderComments(comments) {
+  var renderedComments = comments.map(function (comment) {
+    return "\n    <div class=\"comment\">\n      <div class=\"content\">\n          <a class=\"author\">Matt</a>\n      <div class=\"text\">\n          " + comment.content + "\n      </div>\n      <div class=\"actions\">\n          <a class=\"reply\">Reply</a>\n      </div>\n    </div>";
+  });
+
+  document.querySelector('.comments-insert').innerHTML += renderedComments.join('');
+}
 exports.default = socket;
 
 });

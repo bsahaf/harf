@@ -1,0 +1,12 @@
+{application,phoenix_html_simplified_helpers,
+             [{applications,[kernel,stdlib,elixir,logger,timex,tzdata,
+                             gettext]},
+              {description,"Some view helpers for phoenix html( truncate, time_ago_in_words, number_with_delimiter, url_for, current_page? )\n"},
+              {modules,['Elixir.Phoenix.HTML.SimplifiedHelpers',
+                        'Elixir.Phoenix.HTML.SimplifiedHelpers.Gettext',
+                        'Elixir.Phoenix.HTML.SimplifiedHelpers.NumberWithDelimiter',
+                        'Elixir.Phoenix.HTML.SimplifiedHelpers.TimeAgoInWords',
+                        'Elixir.Phoenix.HTML.SimplifiedHelpers.Truncate',
+                        'Elixir.Phoenix.HTML.SimplifiedHelpers.URL']},
+              {registered,[]},
+              {vsn,"2.1.0"}]}.

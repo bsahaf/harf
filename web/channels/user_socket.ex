@@ -1,8 +1,8 @@
 defmodule Discuss.UserSocket do
   use Phoenix.Socket
 
-  ## Channels
-  # channel "room:*", Discuss.RoomChannel
+  # * sets the wildcard and routes everything to the CommentsChannel
+  channel "comments:*", Discuss.CommentsChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
