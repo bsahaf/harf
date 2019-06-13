@@ -9,6 +9,8 @@ defmodule Discuss.CommentsChannel do
         |> Repo.get(topic_id)
         |> Repo.preload(:comments)
 
+        IO.inspect topic
+
         {:ok, %{comments: topic.comments}, assign(socket, :topic, topic)}
     end
 
@@ -24,6 +26,8 @@ defmodule Discuss.CommentsChannel do
     end
 
     defp handle_insert({:ok, comment}, changeset, socket) do
+        socket
+        |> broadcast!("comments:#{socket.assigns.topic.id}:new", %{comment: comment})
         {:reply, :ok, socket}
     end
 

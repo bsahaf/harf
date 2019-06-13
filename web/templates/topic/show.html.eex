@@ -3,14 +3,18 @@
 <div class="ui divider"></div>
 <p>
  <%= if @topic.image_url != "" do %>
-        <%= img_tag(@topic.image_url, [class: "ui medium rounded image"])%>
+        <%= img_tag(@topic.image_url, [class: "post-image ui centered medium rounded image"])%>
         <br>
-        <%= @topic.description %>
 <% end %>
+
+<div class = "post-description">
+    <%= @topic.description %>
+</div>
 
 </p>
 <div class = "ui segment">
-    <div class="comments-insert ui centered small comments">
+    <div class="ui centered small comments">
+        <div class = "comments-insert"></div>
         <form class="ui reply form">
             <div class="field">
                 <textarea></textarea>

@@ -18,14 +18,6 @@
                     <p> <%= truncate(topic.description, length: 255) %> </p>
                 </div>
                 <div class="extra">
-                    <div class="ui right floated labeled button">
-                        <div class="mini ui red button">
-                            <i class="heart icon"></i>
-                        </div>
-                        <a class="ui basic red left pointing label">
-                                1,048
-                        </a>
-                    </div>
                  <%= if @conn.assigns.user != nil && @conn.assigns.user.id == topic.user_id  do %>
                      <div class="mini ui left floated button">
                         <%= link "Edit" , to: topic_path(@conn, :edit, topic) %>

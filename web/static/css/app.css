@@ -13,11 +13,16 @@ html {
 
 /*******index.html*************/
 
-/* a.header {
-    font-size: 150%;
-    text-align: center;
-} */
+.post-description {
+    font-size: 16px;
+    padding: 1%;
+    margin: 2%;
+    word-spacing: 3px;
+}
 
+.post-image {
+    margin-top: 5%;
+}
 
 
 

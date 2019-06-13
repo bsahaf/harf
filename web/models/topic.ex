@@ -7,7 +7,7 @@ defmodule Discuss.Topic do
         field :description, :string
         field :image_url, :string
         belongs_to :user, Discuss.User
-        has_many :comments, Discuss.Comment
+        has_many :comments, Discuss.Comment, on_delete: :delete_all
     end
 
 

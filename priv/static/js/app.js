@@ -1555,8 +1555,10 @@ var createSocket = function createSocket(topicID) {
   }).receive("error", function (resp) {
     console.log("Unable to join", resp);
   });
+
+  channel.on("comments:" + topicID + ":new", renderComment);
+
   document.querySelector('.comment-button').addEventListener('click', function () {
-    console.log("here");
     var content = document.querySelector('textarea').value;
     channel.push('comment:add', { content: content });
   });
@@ -1564,12 +1566,21 @@ var createSocket = function createSocket(topicID) {
 
 window.createSocket = createSocket;
 
+function commentTemplate(comment) {
+  return "\n  <div class=\"comment\">\n    <div class=\"content\">\n        <a class=\"author\">Matt</a>\n    <div class=\"text\">\n        " + comment.content + "\n    </div>\n    <div class=\"actions\">\n        <a class=\"reply\">Reply</a>\n    </div>\n  </div>";
+}
+
 function renderComments(comments) {
   var renderedComments = comments.map(function (comment) {
-    return "\n    <div class=\"comment\">\n      <div class=\"content\">\n          <a class=\"author\">Matt</a>\n      <div class=\"text\">\n          " + comment.content + "\n      </div>\n      <div class=\"actions\">\n          <a class=\"reply\">Reply</a>\n      </div>\n    </div>";
+    return commentTemplate(comment);
   });
 
-  document.querySelector('.comments-insert').innerHTML += renderedComments.join('');
+  document.querySelector('.comments-insert').innerHTML = renderedComments.join('');
+}
+
+function renderComment(event) {
+  var renderedComment = commentTemplate(event.comment);
+  document.querySelector('.comments-insert').innerHTML += renderedComment;
 }
 exports.default = socket;
 
